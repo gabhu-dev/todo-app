@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import CardTask from "@/components/CardTask.vue"
+import MainSection from "@/components/MainSection.vue"
+import MainLayout from "@/layouts/MainLayout.vue"
 </script>
 
 <template>
-  <CardTask title="Message" :status="1" date="ee" />
+  <MainLayout>
+    <MainSection />
+  </MainLayout>
 </template>
 
 <style scoped></style>

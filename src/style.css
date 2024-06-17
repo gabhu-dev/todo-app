@@ -19,8 +19,18 @@
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
+}
+
+@layer base {
+  button {
+    @apply inline-flex h-12 items-center justify-center rounded-md border border-gray-400 border-solid px-6 text-gray-700 shadow-lg shadow-neutral-500/20 transition active:scale-95
+  }
+}
+
+@layer components {
+  .button--primary {
+    @apply bg-aquamarine border-none text-gray-800
+  }
 }
