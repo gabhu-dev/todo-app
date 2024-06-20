@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import TabPanel from "@/components/TabPanel.vue"
-import CardTask from "@/components/CardTask.vue"
+import TabPanel from "@/components/molecules/TabPanel.vue"
+import CardTask from "@/components/molecules/CardTask.vue"
 </script>
 <template>
   <div>
