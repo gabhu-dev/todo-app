@@ -2,8 +2,13 @@
 import TButton from "@/components/atoms/TButton.vue"
 import TInput from "@/components/atoms/TInput.vue"
 import TSelect from "@/components/atoms/TSelect.vue"
+import { tasksService } from "@/services"
 
 import { ButtonType } from "@/@types/button"
+
+const handleGet = async () => {
+  await tasksService.get()
+}
 </script>
 <template>
   <div class="flex justify-between items-end">
@@ -16,6 +21,6 @@ import { ButtonType } from "@/@types/button"
         :options="[{ value: 'todo', label: 'TODO' }]"
       />
     </div>
-    <TButton :type="ButtonType.Primary"> Agregar tarea </TButton>
+    <TButton :type="ButtonType.Primary" @click="handleGet"> Agregar tarea </TButton>
   </div>
 </template>
