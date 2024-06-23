@@ -5,6 +5,7 @@ import { XMarkIcon } from "@heroicons/vue/24/outline"
 withDefaults(
   defineProps<{
     open: boolean
+    title: string
   }>(),
   {
     open: false,
@@ -29,7 +30,7 @@ defineEmits<{
       <div class="bg-white m-auto rounded p-5 shadow">
         <!--Cabecera-->
         <div class="flex mb-4">
-          <TTypographyTitle type="h6">This is a title</TTypographyTitle>
+          <TTypographyTitle type="h6">{{ title }}</TTypographyTitle>
           <XMarkIcon class="h-6 w-6 ml-5 cursor-pointer" @click="$emit('onClose')" />
         </div>
         <!--Contenido-->
