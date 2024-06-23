@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from "vue"
 import { TaskStatus } from "@/@types/task"
 import { StarIcon, TrashIcon, CheckCircleIcon, CalendarIcon } from "@heroicons/vue/24/outline"
 

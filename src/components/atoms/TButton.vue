@@ -7,7 +7,7 @@ defineProps<{
 </script>
 
 <template>
-  <button :class="{ 'button--primary': type === 'primary' }">
+  <button :class="{ 'button--primary': type === 'primary' }" type="button">
     <slot></slot>
   </button>
 </template>
