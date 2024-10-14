@@ -1,12 +1,19 @@
 <script setup lang="ts">
-import { reactive } from "vue"
+import { reactive, computed } from "vue"
 import TInput from "@/components/atoms/TInput.vue"
 import TSelect from "@/components/atoms/TSelect.vue"
-import AddModal from "@/components/molecules/AddModal.vue"
+import ModalTask from "@/components/molecules/ModalTask.vue"
+import { LIST_STATUS } from "@/utils/status"
 
 const filters = reactive({
   search: "",
   type: "",
+})
+
+const options = computed(() => {
+  return Object.values(LIST_STATUS).map((option) => {
+    return { label: option.title, value: option.status }
+  })
 })
 </script>
 <template>
@@ -23,9 +30,9 @@ const filters = reactive({
         label="Tipo"
         name="type"
         placeholder="Seleccione"
-        :options="[{ value: 'todo', label: 'TODO' }]"
+        :options="options"
       />
     </div>
-    <AddModal />
+    <ModalTask />
   </div>
 </template>

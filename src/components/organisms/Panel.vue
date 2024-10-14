@@ -25,9 +25,10 @@ const listTasksByStatus = computed(() => {
         <CardTask
           v-for="task in listTasksByStatus"
           class="mb-3"
-          :title="task.description"
+          :description="task.description"
           :status="task.status"
           :date="task.programatedAt"
+          :id="task.id"
         />
       </div>
     </div>

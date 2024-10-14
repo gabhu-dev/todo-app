@@ -30,6 +30,7 @@ const options = computed(() => {
 const handleAdd = async () => {
   console.log("submit")
   await tasksStore.add(formState)
+  open.value = false
 }
 </script>
 <template>
