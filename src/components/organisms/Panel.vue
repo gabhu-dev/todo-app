@@ -14,20 +14,22 @@ const props = defineProps<{
 }>()
 
 const listTasksByStatus = computed(() => {
-  return tasksStore.tasks.filter((task) => task.status === props.status)
+  return tasksStore.tasks.filter((task) => task.status == props.status)
 })
 </script>
 <template>
-  <div>
-    <TabPanel class="mb-5" :status="status" />
+  <div class="grid col-span-3">
     <div>
-      <CardTask
-        v-for="task in listTasksByStatus"
-        class="mb-3"
-        :title="task.description"
-        :status="task.status"
-        :date="task.programatedAt"
-      />
+      <TabPanel class="mb-5" :status="status" />
+      <div>
+        <CardTask
+          v-for="task in listTasksByStatus"
+          class="mb-3"
+          :title="task.description"
+          :status="task.status"
+          :date="task.programatedAt"
+        />
+      </div>
     </div>
   </div>
 </template>

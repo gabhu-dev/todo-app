@@ -1,10 +1,19 @@
 <script setup lang="ts">
-const props = defineProps<{
+defineProps<{
   label?: string
   name?: string
   placeholder?: string
   required?: boolean
+  value: any
 }>()
+
+const emit = defineEmits<{
+  (event: "update:value", value: string): void
+}>()
+
+const updateValue = (e: Event) => {
+  emit("update:value", (e.target as HTMLInputElement).value)
+}
 </script>
 <template>
   <div>
@@ -15,6 +24,7 @@ const props = defineProps<{
       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm outline-none rounded-lg focus:ring-blue-500 focus:border-blue-500 focus-visible:border-blue-500 block w-full p-2.5"
       :placeholder="placeholder"
       :required="required"
+      @change="updateValue"
     />
   </div>
 </template>

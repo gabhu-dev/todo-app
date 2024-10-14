@@ -17,11 +17,6 @@ onMounted(async () => {
   <h4 class="text-3xl font-semibold mt-10 mb-6">MI TODO LIST</h4>
   <Filters class="mb-8" />
   <div class="grid grid-cols-12 gap-3">
-    <Panel
-      v-for="status in LIST_STATUS"
-      :key="status.status"
-      :status="status.status"
-      class="grid col-span-3"
-    />
+    <Panel v-for="status in LIST_STATUS" :key="status.status" :status="status.status" />
   </div>
 </template>

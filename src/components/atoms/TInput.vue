@@ -6,21 +6,21 @@ const props = defineProps<{
   name?: string
   placeholder?: string
   required?: boolean
-  modelValue: string
+  value: string
 }>()
 
 const emit = defineEmits<{
-  (event: "update:modelValue", value: string): void
+  (event: "update:value", value: string): void
 }>()
 
 const isWriting = ref(false)
 
 const isEmpty = computed(() => {
-  return isWriting.value ? !props.modelValue || !props.modelValue.length : false
+  return isWriting.value ? !props.value || !props.value.length : false
 })
 
 const updateValue = (e: Event) => {
-  emit("update:modelValue", (e.target as HTMLInputElement).value)
+  emit("update:value", (e.target as HTMLInputElement).value)
   isWriting.value = true
 }
 </script>
@@ -34,7 +34,7 @@ const updateValue = (e: Event) => {
       :class="{ '!border-red-500': isEmpty }"
       :placeholder="placeholder"
       :required="required"
-      :value="modelValue"
+      :value="value"
       @input="updateValue"
     />
     <div class="h-5">
