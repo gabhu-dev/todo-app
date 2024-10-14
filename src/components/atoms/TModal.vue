@@ -27,9 +27,9 @@ defineEmits<{
     <!--Contenedor de modal-->
     <div class="h-full w-full flex align-middle justify-center">
       <!--Modal-->
-      <div class="bg-white m-auto rounded p-5 shadow">
+      <div class="bg-white m-auto rounded p-5 shadow w-[30rem]">
         <!--Cabecera-->
-        <div class="flex mb-4">
+        <div class="flex mb-4 justify-between">
           <TTypographyTitle type="h6">{{ title }}</TTypographyTitle>
           <XMarkIcon class="h-6 w-6 ml-5 cursor-pointer" @click="$emit('onClose')" />
         </div>
