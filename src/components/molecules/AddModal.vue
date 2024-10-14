@@ -6,9 +6,11 @@ import TSelect from "@/components/atoms/TSelect.vue"
 import TDate from "@/components/atoms/TDate.vue"
 import TModal from "@/components/atoms/TModal.vue"
 
-import { tasksService } from "@/services"
-
 import { ButtonType } from "@/@types/button"
+
+import { useTasksStore } from "@/store"
+
+const tasksStore = useTasksStore()
 
 const open = ref(false)
 const formState = reactive({
@@ -16,22 +18,21 @@ const formState = reactive({
 })
 
 const handleAdd = async () => {
+  console.log("submit")
+
   const newTask = {
     description: "ddd",
     status: 1,
     programatedAt: "hdhd",
-    starred: true,
+    starred: false,
   }
-  await tasksService.add(newTask)
-}
-const handleSubmit = () => {
-  console.log("submit")
+  await tasksStore.add(newTask)
 }
 </script>
 <template>
   <TButton :type="ButtonType.Primary" @click="open = !open"> Agregar tarea </TButton>
   <TModal :open="open" title="Agregar una tarea" @onClose="open = false">
-    <form @submit.prevent="handleSubmit">
+    <form @submit.prevent="handleAdd">
       <TInput
         v-model="formState.title"
         label="Título de tarea"
@@ -45,7 +46,7 @@ const handleSubmit = () => {
         :options="[{ value: 'todo', label: 'TODO' }]"
       />
       <TDate label="Fecha" placeholder="Escribe aquí..." />
-      <TButton :type="ButtonType.Primary" @click="handleSubmit">Agregar</TButton>
+      <TButton :type="ButtonType.Primary" @click="handleAdd">Agregar</TButton>
     </form>
   </TModal>
 </template>

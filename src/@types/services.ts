@@ -6,3 +6,8 @@ export interface NewTask {
   programatedAt: string
   starred: boolean
 }
+
+export interface Task extends NewTask {
+  createdAt: string
+  id: string
+}
