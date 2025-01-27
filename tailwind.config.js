@@ -12,4 +12,5 @@ export default {
     },
   },
   plugins: [],
+  safelist: ['border-progress', 'border-complete', 'border-overdue', 'border-gray-500']
 }
