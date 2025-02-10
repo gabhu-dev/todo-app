@@ -23,8 +23,8 @@ const emit = defineEmits<{
 
 const openDropdown = ref(false)
 
-const updateValue = (e: Event) => {
-  emit("update:value", (e.target as HTMLInputElement).value)
+const updateValue = (val: string) => {
+  emit("update:value", val)
 }
 
 const handleSetDropdown = () => {
@@ -38,6 +38,10 @@ const handleMouseLeave = () => {
 
 const handleMouseDown = () => {
   console.log("handleMouseDown")
+}
+
+const handleSelectOption = (val: string) => {
+  updateValue(val)
 }
 
 onMounted(() => {
@@ -70,13 +74,18 @@ onMounted(() => {
     <div @click="handleSetDropdown">
       <label :for="name" class="block mb-0.5 text-sm font-medium text-gray-900">{{ label }}</label>
       <div class="t-select">
-        <span>{{ placeholder }}</span>
+        <span>{{ value || placeholder }}</span>
       </div>
     </div>
     <!--Lista-->
     <Transition>
       <div v-if="openDropdown" class="t-select__options">
-        <li v-for="optionItem in options" :key="optionItem.value" class="t-select__option">
+        <li
+          v-for="optionItem in options"
+          :key="optionItem.value"
+          class="t-select__option"
+          @click="handleSelectOption(optionItem.label)"
+        >
           {{ optionItem.label }}
         </li>
       </div>
