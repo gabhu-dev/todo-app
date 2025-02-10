@@ -37,8 +37,8 @@ const updateValue = (e: Event) => {
       :value="value"
       @input="updateValue"
     />
-    <div class="h-5">
-      <span v-if="isEmpty" class="text-red-500 text-sm"> Completa este campo </span>
+    <div class="h-5" v-if="isEmpty">
+      <span class="text-red-500 text-sm"> Completa este campo </span>
     </div>
   </div>
 </template>
