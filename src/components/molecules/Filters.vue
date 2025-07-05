@@ -2,12 +2,14 @@
 import { reactive, computed } from "vue"
 import TInput from "@/components/atoms/TInput.vue"
 import TSelect from "@/components/atoms/TSelect.vue"
+import TSelectDemo from "@/components/atoms/TSelectDemo.vue"
 import ModalTask from "@/components/molecules/ModalTask.vue"
 import { LIST_STATUS } from "@/utils/status"
 
 const filters = reactive({
   search: "",
   type: "",
+  typeDemo: ""
 })
 
 const options = computed(() => {
@@ -27,8 +29,15 @@ const options = computed(() => {
       />
       <TSelect
         v-model:value="filters.type"
-        label="Tipo"
+        label="Tipo (TSelect)"
         name="type"
+        placeholder="Seleccione"
+        :options="options"
+      />
+      <TSelectDemo
+        v-model="filters.typeDemo"
+        label="Tipo (TSelectDemo)"
+        name="typeDemo"
         placeholder="Seleccione"
         :options="options"
       />
