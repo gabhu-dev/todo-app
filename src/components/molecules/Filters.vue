@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { reactive, computed } from "vue"
 import TInput from "@/components/atoms/TInput.vue"
+// import TSelect from "@/components/atoms/TSelectXX.vue"
 import TSelect from "@/components/atoms/TSelect.vue"
-import TSelectDemo from "@/components/atoms/TSelectDemo.vue"
 import ModalTask from "@/components/molecules/ModalTask.vue"
 import { LIST_STATUS } from "@/utils/status"
 
@@ -27,16 +27,16 @@ const options = computed(() => {
         name="task"
         placeholder="Escribe aquí..."
       />
-      <TSelect
+      <!-- <TSelect
         v-model:value="filters.type"
         label="Tipo (TSelect)"
         name="type"
         placeholder="Seleccione"
         :options="options"
-      />
-      <TSelectDemo
+      /> -->
+      <TSelect
         v-model="filters.typeDemo"
-        label="Tipo (TSelectDemo)"
+        label="Tipo"
         name="typeDemo"
         placeholder="Seleccione"
         :options="options"

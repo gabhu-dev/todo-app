@@ -1,125 +1,93 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue"
-import { ChevronDownIcon } from "@heroicons/vue/24/outline"
+import { ref, computed, onMounted, onBeforeUnmount, defineProps, defineEmits, watch } from 'vue'
+import { ChevronDownIcon } from '@heroicons/vue/24/outline'
 
-interface SelectOption {
-  label: string
-  value: any
-}
-
-defineProps<{
+const props = defineProps<{
   label?: string
-  name?: string
-  placeholder?: string
-  required?: boolean
-  options: SelectOption[]
-  selected?: boolean
-  value: any
+  options?: { label: string; value: any }[]
+  modelValue?: any
 }>()
+const emit = defineEmits(['update:modelValue'])
 
-const emit = defineEmits<{
-  (event: "update:value", value: string): void
-}>()
+const open = ref(false)
+const rootRef = ref<HTMLElement | null>(null)
+const localOptions = computed(() => props.options ?? [
+  { label: 'Opción 1', value: 1 },
+  { label: 'Opción 2', value: 2 },
+  { label: 'Opción 3', value: 3 },
+])
+const selected = ref(props.modelValue ?? localOptions.value[0]?.value)
 
-const openDropdown = ref(false)
+const selectedLabel = computed(() => {
+  const found = localOptions.value.find(opt => opt.value === selected.value)
+  return found ? found.label : ''
+})
 
-const updateValue = (val: string) => {
-  emit("update:value", val)
+function toggleDropdown() {
+  open.value = !open.value
 }
-
-const handleSetDropdown = () => {
-  console.log("handleSetDropdown")
-  openDropdown.value = !openDropdown.value
+function selectOption(option: { label: string; value: any }) {
+  selected.value = option.value
+  emit('update:modelValue', option.value)
+  open.value = false
 }
-
-const handleMouseLeave = () => {
-  console.log("handleMouseLeave")
+function handleClickOutside(event: MouseEvent) {
+  if (rootRef.value && !rootRef.value.contains(event.target as Node)) {
+    open.value = false
+  }
 }
-
-const handleMouseDown = () => {
-  console.log("handleMouseDown")
-}
-
-const handleSelectOption = (val: string) => {
-  updateValue(val)
-}
-
 onMounted(() => {
-  window.addEventListener("mousedown", handleMouseDown)
+  document.addEventListener('mousedown', handleClickOutside)
+})
+onBeforeUnmount(() => {
+  document.removeEventListener('mousedown', handleClickOutside)
+})
+watch(() => props.modelValue, (val) => {
+  selected.value = val
 })
 </script>
+
 <template>
-  <!-- <div class="relative">
-    <label :for="name" class="block mb-0.5 text-sm font-medium text-gray-900">{{ label }}</label>
-    <select
-      :id="name"
-      name="select"
-      class="t-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg outline-none w-full p-2.5 pr-8 focus:ring-blue-500 focus:border-blue-500 block"
-      :placeholder="placeholder"
-      :value="value"
-      @change="updateValue"
+  <div class="relative w-full max-w-xs mx-auto" ref="rootRef">
+    <label v-if="label" class="block mb-1 text-sm font-medium text-gray-700">{{ label }}</label>
+    <button
+      type="button"
+      class="flex items-center justify-between w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2.5 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
+      @click="toggleDropdown"
     >
-      <option
-        v-for="optionItem in options"
-        :key="optionItem.value"
-        :value="optionItem.value"
-        :selected="selected"
+      <span>{{ selectedLabel || 'Selecciona una opción' }}</span>
+      <ChevronDownIcon
+        class="h-5 w-5 ml-2 transition-transform duration-200"
+        :class="open ? 'rotate-180' : ''"
+      />
+    </button>
+    <transition name="fade">
+      <ul
+        v-if="open"
+        class="absolute left-0 right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-20 max-h-60 overflow-auto"
       >
-        {{ optionItem.label }}
-      </option>
-    </select>
-    <ChevronDownIcon class="h-4 w-4 absolute right-2 top-[55%] pointer-events-none" />
-  </div> -->
-  <div class="t-select-root">
-    <div @click="handleSetDropdown">
-      <label :for="name" class="block mb-0.5 text-sm font-medium text-gray-900">{{ label }}</label>
-      <div class="t-select">
-        <span>{{ value || placeholder }}</span>
-      </div>
-    </div>
-    <!--Lista-->
-    <Transition>
-      <div v-if="openDropdown" class="t-select__options">
         <li
-          v-for="optionItem in options"
-          :key="optionItem.value"
-          class="t-select__option"
-          @click="handleSelectOption(optionItem.label)"
+          v-for="option in localOptions"
+          :key="option.value"
+          @click="selectOption(option)"
+          class="px-4 py-2 cursor-pointer hover:bg-blue-100 text-gray-900"
+          :class="option.value === selected ? 'bg-blue-50 font-semibold' : ''"
         >
-          {{ optionItem.label }}
+          {{ option.label }}
         </li>
-      </div>
-    </Transition>
+      </ul>
+    </transition>
+    <!-- <div class="mt-4 text-gray-700">
+      Valor seleccionado: <span class="font-bold">{{ selected }}</span>
+    </div> -->
   </div>
 </template>
 
 <style scoped>
-.v-enter-active,
-.v-leave-active {
-  transition: opacity 0.5s ease;
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.2s;
 }
-
-.v-enter-from,
-.v-leave-to {
+.fade-enter-from, .fade-leave-to {
   opacity: 0;
-}
-.t-select-root {
-  @apply relative;
-}
-.t-select {
-  @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg outline-none w-full p-2.5 pr-8 cursor-pointer;
-}
-.t-select__options {
-  @apply bg-gray-50 mt-3 p-2 rounded-lg absolute z-10 overflow-hidden w-full transition-all duration-300;
-  box-shadow:
-    0 6px 16px 0 rgba(0, 0, 0, 0.08),
-    0 3px 6px -4px rgba(0, 0, 0, 0.12),
-    0 9px 28px 8px rgba(0, 0, 0, 0.05);
-}
-.t-select__option {
-  @apply list-none p-2 transition-all duration-300;
-}
-.t-select__option:hover {
-  @apply bg-[#B5F9E6] cursor-pointer rounded;
 }
 </style>

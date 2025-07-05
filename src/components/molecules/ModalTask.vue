@@ -44,7 +44,7 @@ const handleAdd = async () => {
         :required="true"
       />
       <TSelect
-        v-model:value="formState.status"
+        v-model="formState.status"
         label="Tipo"
         name="type"
         placeholder="Seleccione"
