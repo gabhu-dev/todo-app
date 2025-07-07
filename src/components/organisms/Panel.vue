@@ -20,8 +20,8 @@ const listTasksByStatus = computed(() => {
 <template>
   <div class="grid col-span-3">
     <div>
-      <TabPanel class="mb-5" :status="status" />
-      <div>
+      <TabPanel class="mb-3" :status="status" />
+      <div class="p-2 bg-teal-50 rounded-sm">
         <CardTask
           v-for="task in listTasksByStatus"
           class="mb-3"

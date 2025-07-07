@@ -20,7 +20,7 @@ const handleDelete = async () => {
 </script>
 
 <template>
-  <div class="shadow-sm rounded border border-gray-700 border-solid h-max min-w-20 w-full p-5">
+  <div class="bg-white shadow-sm rounded border border-gray-700 border-solid h-max min-w-20 w-full p-5">
     <p class="text-xs text-gray-500 mb-2">Vencimiento: Mañana a las 4:50pm</p>
     <h5 class="text-xl font-medium mb-4">
       {{ description }}
