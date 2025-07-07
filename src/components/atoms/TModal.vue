@@ -51,7 +51,10 @@ function handleClose() {
           <!--Cabecera-->
           <div class="flex mb-4 justify-between">
             <TTypographyTitle type="h6">{{ title }}</TTypographyTitle>
-            <XMarkIcon class="h-6 w-6 ml-5 cursor-pointer" @click="handleClose" />
+            <XMarkIcon
+              class="h-6 w-6 ml-5 cursor-pointer transition-all duration-300 hover:rotate-90 hover:text-aquamarine active:scale-90"
+              @click="handleClose"
+            />
           </div>
           <!--Contenido-->
           <div>
