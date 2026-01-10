@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { reactive, computed } from "vue"
 import TInput from "@/components/atoms/TInput.vue"
-// import TSelect from "@/components/atoms/TSelectXX.vue"
 import TSelect from "@/components/atoms/TSelect.vue"
 import ModalTask from "@/components/molecules/ModalTask.vue"
 import { LIST_STATUS } from "@/utils/status"
@@ -9,7 +8,6 @@ import { LIST_STATUS } from "@/utils/status"
 const filters = reactive({
   search: "",
   type: "",
-  typeDemo: ""
 })
 
 const options = computed(() => {
@@ -26,20 +24,15 @@ const options = computed(() => {
         label="Tarea"
         name="task"
         placeholder="Escribe aquí..."
+        class="w-[250px]"
       />
-      <!-- <TSelect
-        v-model:value="filters.type"
-        label="Tipo (TSelect)"
+      <TSelect
+        v-model="filters.type"
+        label="Tipo"
         name="type"
         placeholder="Seleccione"
         :options="options"
-      /> -->
-      <TSelect
-        v-model="filters.typeDemo"
-        label="Tipo"
-        name="typeDemo"
-        placeholder="Seleccione"
-        :options="options"
+        class="w-[250px]"
       />
     </div>
     <ModalTask />

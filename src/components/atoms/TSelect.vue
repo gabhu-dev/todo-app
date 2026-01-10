@@ -2,24 +2,21 @@
 import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
 import { ChevronDownIcon } from '@heroicons/vue/24/outline'
 
-const props = defineProps<{
+const props = withDefaults( defineProps<{
   label?: string
   options?: { label: string; value: any }[]
   modelValue?: any
-}>()
+}>(), {
+  options: () => []
+})
 const emit = defineEmits(['update:modelValue'])
 
 const open = ref(false)
 const rootRef = ref<HTMLElement | null>(null)
-const localOptions = computed(() => props.options ?? [
-  { label: 'Opción 1', value: 1 },
-  { label: 'Opción 2', value: 2 },
-  { label: 'Opción 3', value: 3 },
-])
-const selected = ref(props.modelValue ?? localOptions.value[0]?.value)
+const selected = ref(props.modelValue ?? props.options[0]?.value)
 
 const selectedLabel = computed(() => {
-  const found = localOptions.value.find(opt => opt.value === selected.value)
+  const found = props.options.find(opt => opt.value === selected.value)
   return found ? found.label : ''
 })
 
@@ -52,10 +49,11 @@ watch(() => props.modelValue, (val) => {
     <label v-if="label" class="block mb-1 text-sm font-medium text-gray-700">{{ label }}</label>
     <button
       type="button"
-      class="flex items-center justify-between w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2.5 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
+      class="flex items-center justify-between w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg p-2.5 cursor-pointer focus:outline-none focus:border-blue-500 focus-visible:border-blue-500"
+      :class="{ 'border-blue-500': open }"
       @click="toggleDropdown"
     >
-      <span>{{ selectedLabel || 'Selecciona una opción' }}</span>
+      <span :class="{ 'text-gray-400': !selectedLabel }">{{ selectedLabel || 'Selecciona una opción' }}</span>
       <ChevronDownIcon
         class="h-5 w-5 ml-2 transition-transform duration-200"
         :class="open ? 'rotate-180' : ''"
@@ -67,7 +65,7 @@ watch(() => props.modelValue, (val) => {
         class="absolute left-0 right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-20 max-h-60 overflow-auto"
       >
         <li
-          v-for="option in localOptions"
+          v-for="option in options"
           :key="option.value"
           @click="selectOption(option)"
           class="px-4 py-2 cursor-pointer hover:bg-blue-100 text-gray-900"
@@ -77,9 +75,6 @@ watch(() => props.modelValue, (val) => {
         </li>
       </ul>
     </transition>
-    <!-- <div class="mt-4 text-gray-700">
-      Valor seleccionado: <span class="font-bold">{{ selected }}</span>
-    </div> -->
   </div>
 </template>
 
