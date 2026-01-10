@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount, defineProps, defineEmits, watch } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
 import { ChevronDownIcon } from '@heroicons/vue/24/outline'
 
 const props = defineProps<{
@@ -48,7 +48,7 @@ watch(() => props.modelValue, (val) => {
 </script>
 
 <template>
-  <div class="relative w-full max-w-xs mx-auto" ref="rootRef">
+  <div class="relative w-full max-w-xs" ref="rootRef">
     <label v-if="label" class="block mb-1 text-sm font-medium text-gray-700">{{ label }}</label>
     <button
       type="button"
