@@ -21,16 +21,28 @@ const formState = reactive<NewTask>({
   programatedAt: "",
   starred: false,
 })
+const loading = ref(false)
+
 const options = computed(() => {
   return Object.values(LIST_STATUS).map((option) => {
     return { label: option.title, value: option.status }
   })
 })
 
+const clear = () => {
+  formState.description = ""
+  formState.status = 1
+  formState.programatedAt = ""
+  formState.starred = false
+}
+
 const handleAdd = async () => {
   console.log("submit")
+  loading.value = true
   await tasksStore.add(formState)
   open.value = false
+  loading.value = false
+  clear()
 }
 </script>
 <template>
@@ -56,7 +68,7 @@ const handleAdd = async () => {
         class="w-full max-w-full"
         label="Fecha"
         placeholder="Escribe aquí..." />
-      <TButton class="my-5" :type="ButtonType.Primary" @click="handleAdd" :loading="true">Crear tarea</TButton>
+      <TButton class="my-5" :type="ButtonType.Primary" @click="handleAdd" :loading="loading">Crear tarea</TButton>
     </form>
   </TModal>
 </template>
