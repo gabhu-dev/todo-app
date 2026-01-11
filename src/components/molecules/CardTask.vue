@@ -62,7 +62,7 @@ const handleChangeStatus = async () => {
     class="bg-white shadow-sm rounded border border-gray-100 border-solid h-max min-w-20 w-full p-5"
   >
     <TToast :type="toast.type" :message="toast.message" />
-    <p class="text-xs text-gray-500 mb-2">Vencimiento: Mañana a las 4:50pm</p>
+    <p class="text-xs text-gray-500 mb-2">Vencimiento: {{ date }}</p>
     <h5 class="text-xl font-medium mb-4">
       {{ description }}
     </h5>
