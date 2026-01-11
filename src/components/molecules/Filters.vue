@@ -36,7 +36,7 @@ const options = computed(() => {
         name="type"
         placeholder="Seleccione"
         :options="options"
-        class="w-[250px]"
+        class="!w-[250px]"
       />
     </div>
     <TButton :type="ButtonType.Primary" @click="isModalOpen = true"> Crear tarea </TButton>

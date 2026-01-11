@@ -1,23 +1,26 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
-import { ChevronDownIcon } from '@heroicons/vue/24/outline'
+import { ref, computed, onMounted, onBeforeUnmount, watch } from "vue"
+import { ChevronDownIcon } from "@heroicons/vue/24/outline"
 
-const props = withDefaults( defineProps<{
-  label?: string
-  options?: { label: string; value: any }[]
-  modelValue?: any
-}>(), {
-  options: () => []
-})
-const emit = defineEmits(['update:modelValue'])
+const props = withDefaults(
+  defineProps<{
+    label?: string
+    options?: { label: string; value: any }[]
+    modelValue?: any
+  }>(),
+  {
+    options: () => [],
+  },
+)
+const emit = defineEmits(["update:modelValue"])
 
 const open = ref(false)
 const rootRef = ref<HTMLElement | null>(null)
 const selected = ref(props.modelValue ?? props.options[0]?.value)
 
 const selectedLabel = computed(() => {
-  const found = props.options.find(opt => opt.value === selected.value)
-  return found ? found.label : ''
+  const found = props.options.find((opt) => opt.value === selected.value)
+  return found ? found.label : ""
 })
 
 function toggleDropdown() {
@@ -25,7 +28,7 @@ function toggleDropdown() {
 }
 function selectOption(option: { label: string; value: any }) {
   selected.value = option.value
-  emit('update:modelValue', option.value)
+  emit("update:modelValue", option.value)
   open.value = false
 }
 function handleClickOutside(event: MouseEvent) {
@@ -34,14 +37,17 @@ function handleClickOutside(event: MouseEvent) {
   }
 }
 onMounted(() => {
-  document.addEventListener('mousedown', handleClickOutside)
+  document.addEventListener("mousedown", handleClickOutside)
 })
 onBeforeUnmount(() => {
-  document.removeEventListener('mousedown', handleClickOutside)
+  document.removeEventListener("mousedown", handleClickOutside)
 })
-watch(() => props.modelValue, (val) => {
-  selected.value = val
-})
+watch(
+  () => props.modelValue,
+  (val) => {
+    selected.value = val
+  },
+)
 </script>
 
 <template>
@@ -53,7 +59,9 @@ watch(() => props.modelValue, (val) => {
       :class="{ 'border-blue-500': open }"
       @click="toggleDropdown"
     >
-      <span :class="{ 'text-gray-400': !selectedLabel }">{{ selectedLabel || 'Selecciona una opción' }}</span>
+      <span :class="{ 'text-gray-400': !selectedLabel }">{{
+        selectedLabel || "Selecciona una opción"
+      }}</span>
       <ChevronDownIcon
         class="h-5 w-5 ml-2 transition-transform duration-200"
         :class="open ? 'rotate-180' : ''"
@@ -79,10 +87,12 @@ watch(() => props.modelValue, (val) => {
 </template>
 
 <style scoped>
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition: opacity 0.2s;
 }
-.fade-enter-from, .fade-leave-to {
+.fade-enter-from,
+.fade-leave-to {
   opacity: 0;
 }
 </style>

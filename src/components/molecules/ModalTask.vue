@@ -73,7 +73,7 @@ watch(
       clear()
     }
   },
-  { immediate: true }
+  { immediate: true },
 )
 
 const modalTitle = computed(() => (props.task ? "Editar tarea" : "Crear nueva tarea"))
@@ -96,7 +96,7 @@ const handleClose = () => {
       />
       <TSelect
         v-model="formState.status"
-        class="w-full max-w-full"
+        class="w-full !max-w-full"
         label="Tipo"
         name="type"
         placeholder="Seleccione"
