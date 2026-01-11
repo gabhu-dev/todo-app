@@ -34,24 +34,29 @@ const handleAdd = async () => {
 }
 </script>
 <template>
-  <TButton :type="ButtonType.Primary" @click="open = !open"> Agregar tarea </TButton>
-  <TModal :open="open" title="Agregar una tarea" @onClose="open = false">
-    <form @submit.prevent="handleAdd">
+  <TButton :type="ButtonType.Primary" @click="open = !open"> Crear tarea </TButton>
+  <TModal :open="open" title="Crear nueva tarea" @onClose="open = false">
+    <form class="flex flex-col items-center gap-5" @submit.prevent="handleAdd">
       <TInput
         v-model:value="formState.description"
+        class="w-full max-w-full"
         label="Título de tarea"
         placeholder="Escribe aquí..."
         :required="true"
       />
       <TSelect
         v-model="formState.status"
+        class="w-full max-w-full"
         label="Tipo"
         name="type"
         placeholder="Seleccione"
         :options="options"
       />
-      <TDate v-model:value="formState.programatedAt" label="Fecha" placeholder="Escribe aquí..." />
-      <TButton :type="ButtonType.Primary" @click="handleAdd">Agregar</TButton>
+      <TDate v-model:value="formState.programatedAt"
+        class="w-full max-w-full"
+        label="Fecha"
+        placeholder="Escribe aquí..." />
+      <TButton class="my-5" :type="ButtonType.Primary" @click="handleAdd" :loading="true">Crear tarea</TButton>
     </form>
   </TModal>
 </template>
