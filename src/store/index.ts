@@ -6,9 +6,22 @@ import { TaskStatus } from "@/@types/task"
 export const useTasksStore = defineStore("tasks", {
   state: () => ({
     tasksData: [] as Task[],
+    filters: {
+      search: "",
+      status: null as TaskStatus | null,
+    },
   }),
   getters: {
     tasks: (state) => state.tasksData,
+    filteredTasks: (state) => {
+      return state.tasksData.filter((task) => {
+        const matchSearch = task.description
+          .toLowerCase()
+          .includes(state.filters.search.toLowerCase())
+        const matchStatus = state.filters.status === null || task.status === state.filters.status
+        return matchSearch && matchStatus
+      })
+    },
   },
   actions: {
     async get() {

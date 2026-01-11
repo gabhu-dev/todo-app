@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, computed, ref } from "vue"
+import { computed, ref } from "vue"
 import TInput from "@/components/atoms/TInput.vue"
 import TSelect from "@/components/atoms/TSelect.vue"
 import TButton from "@/components/atoms/TButton.vue"
@@ -7,31 +7,33 @@ import ModalTask from "@/components/molecules/ModalTask.vue"
 import { LIST_STATUS } from "@/utils/status"
 import { ButtonType } from "@/@types/button"
 
-const filters = reactive({
-  search: "",
-  type: "",
-})
+import { useTasksStore } from "@/store"
+
+const tasksStore = useTasksStore()
 
 const isModalOpen = ref(false)
 
 const options = computed(() => {
-  return Object.values(LIST_STATUS).map((option) => {
-    return { label: option.title, value: option.status }
-  })
+  return [
+    { label: "Todo", value: null },
+    ...Object.values(LIST_STATUS).map((option) => {
+      return { label: option.title, value: option.status }
+    }),
+  ]
 })
 </script>
 <template>
   <div class="flex justify-between items-end">
     <div class="flex space-x-3">
       <TInput
-        v-model:value="filters.search"
+        v-model:value="tasksStore.filters.search"
         label="Tarea"
         name="task"
         placeholder="Escribe aquí..."
         class="w-[250px]"
       />
       <TSelect
-        v-model="filters.type"
+        v-model="tasksStore.filters.status"
         label="Tipo"
         name="type"
         placeholder="Seleccione"

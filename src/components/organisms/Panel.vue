@@ -29,7 +29,7 @@ const toast = ref<{ type: ToastType; message: string }>({
 const localTasks = ref<Task[]>([])
 
 watch(
-  () => tasksStore.tasks,
+  () => tasksStore.filteredTasks,
   (newTasks) => {
     localTasks.value = newTasks.filter((task) => task.status == props.status)
   },
