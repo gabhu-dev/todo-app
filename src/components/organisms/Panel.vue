@@ -35,7 +35,7 @@ const handleClose = () => {
   <div class="grid col-span-3">
     <div>
       <TabPanel class="mb-3" :status="status" />
-      <div class="p-2 bg-teal-50 rounded-sm" style="height: calc(100% - 60px)">
+      <div class="p-2 bg-teal-50 rounded-sm scrollbar-basic overflow-y-auto" style="height: 28rem">
         <CardTask
           v-for="task in listTasksByStatus"
           :key="task.id"
